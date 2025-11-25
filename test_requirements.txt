@@ -1,0 +1,20 @@
+# Test Requirements
+# Additional dependencies needed for comprehensive testing
+
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.1
+pytest-benchmark>=4.0.0
+mock>=5.1.0
+
+# For performance testing
+psutil>=5.9.5
+memory-profiler>=0.61.0
+
+# For integration testing
+requests>=2.31.0
+selenium>=4.15.0  # For web UI testing (optional)
+
+# Testing utilities
+factory-boy>=3.3.0
+Faker>=19.6.2
