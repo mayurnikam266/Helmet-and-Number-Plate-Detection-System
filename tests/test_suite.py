@@ -1,5 +1,13 @@
-
 """
+Comprehensive Test Suite for Helmet and Number Plate Detection System
+Based on System Testing and Validation Documentation (Section 5.0)
+
+This test suite implements the testing strategy outlined in the documentation:
+- Unit Testing (Component verification)
+- Integration Testing (Inter-module verification)
+- System Testing (End-to-end validation)
+- Performance Testing (Benchmarking)
+
 Test Categories:
 - TC-F: Functional Test Cases
 - TC-P: Performance Test Cases
@@ -21,7 +29,8 @@ import sys
 import torch
 
 # Add utils to path for testing
-sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'utils'))
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from utils.tracker import ViolationTracker
 from utils.ocr import predict_number_plate

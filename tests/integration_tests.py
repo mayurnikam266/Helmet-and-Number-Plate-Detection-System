@@ -15,7 +15,8 @@ from unittest.mock import Mock, patch, MagicMock
 import sys
 
 # Add utils to path
-sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'utils'))
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from utils.detector import process_frame
 from utils.tracker import ViolationTracker

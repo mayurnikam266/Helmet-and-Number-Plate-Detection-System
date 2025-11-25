@@ -40,7 +40,8 @@ class TestRunner:
     """
     
     def __init__(self):
-        self.project_root = Path(__file__).parent
+        self.project_root = Path(__file__).parent.parent  # Go up one level from tests/ to project root
+        self.tests_root = Path(__file__).parent  # tests/ directory
         self.results = {
             'unit': {'status': 'not_run', 'duration': 0, 'details': {}},
             'integration': {'status': 'not_run', 'duration': 0, 'details': {}},
@@ -104,9 +105,9 @@ class TestRunner:
         
         cmd = [
             sys.executable, "-m", "pytest", 
-            "test_suite.py::TestViolationTracker",
-            "test_suite.py::TestOCRModule", 
-            "test_suite.py::TestDatabaseModule",
+            "tests/test_suite.py::TestViolationTracker",
+            "tests/test_suite.py::TestOCRModule", 
+            "tests/test_suite.py::TestDatabaseModule",
             "-v" if verbose else "-q",
             "--tb=short"
         ]
@@ -150,18 +151,18 @@ class TestRunner:
         
         start_time = time.time()
         
-        if not os.path.exists(self.project_root / "integration_tests.py"):
+        if not os.path.exists(self.tests_root / "integration_tests.py"):
             print("⚠️  Integration tests file not found, running from test_suite.py")
             cmd = [
                 sys.executable, "-m", "pytest",
-                "test_suite.py::TestIntegrationScenarios",
+                "tests/test_suite.py::TestIntegrationScenarios",
                 "-v" if verbose else "-q",
                 "--tb=short"
             ]
         else:
             cmd = [
                 sys.executable, "-m", "pytest",
-                "integration_tests.py",
+                "tests/integration_tests.py",
                 "-v" if verbose else "-q",
                 "--tb=short",
                 "-m", "integration"
@@ -208,15 +209,15 @@ class TestRunner:
         
         cmd = [
             sys.executable, "-m", "pytest",
-            "test_suite.py::TestSystemPerformance",
+            "tests/test_suite.py::TestSystemPerformance",
             "-v" if verbose else "-q",
             "--tb=short",
             "-m", "performance"
         ]
         
         # Add performance tests if file exists
-        if os.path.exists(self.project_root / "performance_tests.py"):
-            cmd.append("performance_tests.py")
+        if os.path.exists(self.tests_root / "performance_tests.py"):
+            cmd.append("tests/performance_tests.py")
         
         if quick:
             cmd.extend(["-m", "not slow and not gpu"])
@@ -259,8 +260,8 @@ class TestRunner:
         
         cmd = [
             sys.executable, "-m", "pytest",
-            "test_suite.py::TestSystemStability",
-            "test_suite.py::TestDetectorModule",
+            "tests/test_suite.py::TestSystemStability",
+            "tests/test_suite.py::TestDetectorModule",
             "-v" if verbose else "-q",
             "--tb=short"
         ]
@@ -306,7 +307,7 @@ class TestRunner:
         
         cmd = [
             sys.executable, "-m", "pytest",
-            "test_suite.py::TestUsabilityAcceptance",
+            "tests/test_suite.py::TestUsabilityAcceptance",
             "-v" if verbose else "-q",
             "--tb=short",
             "-m", "acceptance"
@@ -348,7 +349,7 @@ class TestRunner:
             "--cov-report=html",
             "--cov-report=term-missing",
             "--cov-fail-under=70",
-            "test_suite.py",
+            "tests/test_suite.py",
             "-v" if verbose else "-q"
         ]
         

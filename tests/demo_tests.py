@@ -85,7 +85,7 @@ def demo_unit_tests():
     print("\n🔧 Unit Test Demo - ViolationTracker")
     
     # Import and test ViolationTracker without external dependencies
-    sys.path.append('utils')
+    sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'utils'))
     
     try:
         from utils.tracker import ViolationTracker
@@ -173,15 +173,15 @@ def show_test_commands():
     print("-" * 40)
     
     commands = [
-        ("python run_tests.py --all", "Run complete test suite"),
-        ("python run_tests.py --unit", "Unit tests only"),
-        ("python run_tests.py --integration", "Integration tests only"),
-        ("python run_tests.py --performance", "Performance tests only"),
-        ("python run_tests.py --quick", "Quick tests (no slow/GPU)"),
-        ("python run_tests.py --coverage", "With coverage report"),
-        ("pytest test_suite.py -v", "Direct pytest execution"),
-        ("pytest -m unit", "Tests with specific marker"),
-        ("pytest -k tracker", "Tests matching pattern")
+        ("python tests/run_tests.py --all", "Run complete test suite"),
+        ("python tests/run_tests.py --unit", "Unit tests only"),
+        ("python tests/run_tests.py --integration", "Integration tests only"),
+        ("python tests/run_tests.py --performance", "Performance tests only"),
+        ("python tests/run_tests.py --quick", "Quick tests (no slow/GPU)"),
+        ("python tests/run_tests.py --coverage", "With coverage report"),
+        ("pytest tests/test_suite.py -v", "Direct pytest execution"),
+        ("pytest -m unit tests/", "Tests with specific marker"),
+        ("pytest -k tracker tests/", "Tests matching pattern")
     ]
     
     for command, description in commands:
@@ -190,7 +190,7 @@ def show_test_commands():
 def check_project_structure():
     """Check if we're in the right directory"""
     required_files = ['main_app.py', 'utils', 'models', 'data']
-    project_root = Path(__file__).parent
+    project_root = Path(__file__).parent.parent  # Go up one level from tests/
     
     missing = []
     for file_path in required_files:
@@ -199,7 +199,7 @@ def check_project_structure():
     
     if missing:
         print(f"⚠️ Missing project files: {missing}")
-        print("Make sure you're running this from the project root directory")
+        print("Make sure you're running this from the tests directory")
         return False
     
     return True
